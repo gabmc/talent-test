@@ -13,21 +13,21 @@
     <form action="../services/login.php" method="post" class="form">
         <label for="username">Username</label>
         <input type="text" name="username" id="username">
-        <?php if (isset($_GET['username'])): ?>
-  <span class="error"><?php echo $_GET['username'] ?></span>
-<?php endif; ?>
+        <?php if (isset($_GET['username'])) : ?>
+          <span class="error"><?php echo $_GET['username'] ?></span>
+        <?php endif; ?>
         <label for="password">Password</label>
         <input type="password" name="password" id="password">
-        <?php if (isset($_GET['password'])): ?>
-  <span class="error"><?php echo $_GET['password'] ?></span>
-<?php endif; ?>
+        <?php if (isset($_GET['password'])) : ?>
+          <span class="error"><?php echo $_GET['password'] ?></span>
+        <?php endif; ?>
         <input type="hidden" name="submit">
         <input type="submit" value="Login">
-        <?php if (isset($_GET['wrong'])): ?>
-  <span class="error">Wrong username or password</span>
-<?php endif; ?>
+        <?php if (isset($_GET['wrong'])) : ?>
+          <span class="error">Wrong username or password</span>
+        <?php endif; ?>
         <p>Don't have an account? Sign up <a href="signUp.php">here</a></p>
     </form>
-        </div>
+  </div>
 </body>
 </html>

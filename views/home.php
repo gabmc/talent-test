@@ -8,34 +8,54 @@
     <title>Home</title>
 </head>
 <body>
+    <div class="container">
     <h1>Home</h1>
     <a href="../services/logout.php">Logout</a>
-    <form action="../services/search.php" method="post" class="form">
         <input type="text" name="search" id="search" placeholder="Search">
-        <input type="submit" value="Search">
-    </form>
-    <div>
-        <ul id="list">
-        </ul>
+        <input type="button" onclick="postsSearcher(document.getElementById('search').value)" value="Search">
+    <div id="posts">
     </div>
     <form action="../services/post.php" method="post" class="form">
         <textarea name="body" id="body" placeholder="Message"></textarea>
         <input type="hidden" name="submit">
         <input type="submit" value="Post">
     </form>
+</div>
 </body>
 <script type="text/javascript">
-    function search(query) {
-        var xmlhttp = new XMLHttpRequest();
+    function postsSearcher(query) {
+        document.getElementById("posts").innerHTML = '';
+        let xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("list").innerHTML = this.responseText;
+            let messages = this.response;
+            messages = JSON.parse(messages);
+            for (let m of messages) {
+                const post = document.createElement("div");
+                const date = document.createElement("b");
+                const body = document.createElement("p");
+                const author = document.createElement("p");
+
+                const datetextnode = document.createTextNode(m.date);
+                const bodytextnode = document.createTextNode(m.body);
+                const authortextnode = document.createTextNode(`By: ${m.author}`);
+
+                date.appendChild(datetextnode);
+                body.appendChild(bodytextnode);
+                author.appendChild(authortextnode);
+                post.appendChild(date);
+                post.appendChild(body);
+                post.appendChild(author);
+
+                post.className = 'post';
+                document.getElementById("posts").appendChild(post);
+            }
         }
         };
-        if (query.length > 0) xmlhttp.open("POST", "../services/search.php?q=" + query, true);
-        else xmlhttp.open("POST", "../services/search.php" + query, true);
+        if (query.length > 0) xmlhttp.open("GET", "../services/search.php?query=" + query, true);
+        else xmlhttp.open("GET", "../services/search.php", true);
         xmlhttp.send();
     }
-    search('')
+    postsSearcher('')
 </script>
 </html>

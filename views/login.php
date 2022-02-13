@@ -8,6 +8,7 @@
     <title>TWTTR</title>
 </head>
 <body>
+  <div class="container-login">
     <h1>Log in</h1>
     <form action="../services/login.php" method="post" class="form">
         <label for="username">Username</label>
@@ -27,5 +28,6 @@
 <?php endif; ?>
         <p>Don't have an account? Sign up <a href="signUp.php">here</a></p>
     </form>
+        </div>
 </body>
 </html>

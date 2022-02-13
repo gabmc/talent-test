@@ -58,9 +58,6 @@ class User implements JsonSerializable{
             return $errors;
         }
       }
-
-      
-
       return $errors;
     }
 

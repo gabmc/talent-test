@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../main.css">
     <title>TWTTR</title>
 </head>
 <body>
-    <form action="../controller/services/signup.php" method="post" class="form">
+  <h1>Sign up</h1>
+    <form action="../services/signup.php" method="post" class="form">
         <label for="username">Username</label>
         <input type="text" name="username" id="username">
         <?php if (isset($_GET['username'])): ?>

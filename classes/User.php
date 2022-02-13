@@ -1,5 +1,5 @@
 <?php
-class User {
+class User implements JsonSerializable{
     // Properties
     private $username;
     private $email;
@@ -8,6 +8,7 @@ class User {
 
     const EMPTY_FIELD = "This field cannot be empty";
     const USERNAME = " have at least 4 letters and 2 numbers and should not contain special characters";
+    const DUP_USERNAME = "This username is already registered";
     const EMAIL = "It must be a valid email";
     const PHONE = "It should have at least 10 numbers, all the characters must be numbers";
     const PASSWORD = "It should be at least 6 characters long and contain a '-' and an uppercase letter";
@@ -36,21 +37,44 @@ class User {
       return $this->password;
     }
 
+    public function jsonSerialize()
+    {
+        return 
+        [
+            'username'   => $this->getUsername(),
+            'email' => $this->getEmail(),
+            'phone' => $this->getPhone(),
+            'password' => $this->getPassword()
+        ];
+    }
+
     public static function login($username, $password) {
-      echo "Hello World!";
+      $errors = array(
+        "username" => User::checkUsername($username),
+        "password" => User::checkPassword($password)
+      );
+      foreach($errors as $key => $val) {
+        if ($val !== 1) {
+            return $errors;
+        }
+      }
+
+      
+
+      return $errors;
     }
 
     public function signUp() {
       $errors = array(
-        "username" => $this->checkUsername($this->username),
-        "email" => $this->checkEmail($this->email),
-        "phone" => $this->checkPhone($this->phone),
-        "password" => $this->checkPassword($this->password)
+        "username" => User::checkUsername($this->username),
+        "email" => User::checkEmail($this->email),
+        "phone" => User::checkPhone($this->phone),
+        "password" => User::checkPassword($this->password)
       );
       return $errors;
     }
 
-    private function checkUsername($username) {
+    private static function checkUsername($username) {
       if (empty($username)) {
         return User::EMPTY_FIELD;
       }
@@ -61,7 +85,7 @@ class User {
       return 1;
     }
 
-    private function checkEmail($email) {
+    private static function checkEmail($email) {
       if (empty($email)) {
         return User::EMPTY_FIELD;
       }
@@ -71,7 +95,7 @@ class User {
       return 1;
     }
 
-    private function checkPhone($phone) {
+    private static function checkPhone($phone) {
       if (empty($phone)) {
         return User::EMPTY_FIELD;
       }
@@ -81,8 +105,8 @@ class User {
       return 1;
     }
 
-    private function checkPassword($password) {
-      if (empty($username)) {
+    private static function checkPassword($password) {
+      if (empty($password)) {
         return User::EMPTY_FIELD;
       }
       return 1;

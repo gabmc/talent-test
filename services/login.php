@@ -24,7 +24,8 @@ if (isset($_POST['submit'])) {
         else {
             $user = jsonDb::select('users', ['username'=>$_POST['username'], 'password'=>$_POST['password']]);
             if (sizeof($user) > 0) {
-                $_SESSION['user'] = serialize($user[0]);
+                $user = $user[0];
+                $_SESSION['user'] = serialize(new User($user->username, $user->email, $user->phone, $user->password));
                 header("Location: ../views/home.php");
                 exit;
             }

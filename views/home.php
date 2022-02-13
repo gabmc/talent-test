@@ -19,7 +19,8 @@
         </ul>
     </div>
     <form action="../services/post.php" method="post" class="form">
-        <textarea name="post" id="post" placeholder="Message"></textarea>
+        <textarea name="body" id="body" placeholder="Message"></textarea>
+        <input type="hidden" name="submit">
         <input type="submit" value="Post">
     </form>
 </body>

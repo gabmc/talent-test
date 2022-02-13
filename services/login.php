@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
         else {
             // set session with user?
             // if
-            $user = jsonDb::select('users', ['username'=>$_POST['username'], 'password'=>$_POST['password']]);
+            $user = jsonDb::select('users', ['username'=>$_POST['username'], 'password'=>$_POST['password']])[0];
             header("Location: ../views/home.php");
             exit;
         }

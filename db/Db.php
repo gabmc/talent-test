@@ -19,10 +19,13 @@ class jsonDb implements Db {
     }
 
     public static function select($table, $filter) {
-        $savedData = file_get_contents(__DIR__."/data/{$table}.json");
-        $savedData = json_decode($savedData);
-        $count = 0;
         $output = array();
+        $count = 0;
+        $savedData = file_get_contents(__DIR__."/data/{$table}.json");
+        if (strlen($savedData) === 0) {
+            return $output;
+        }
+        $savedData = json_decode($savedData);
         foreach ($filter as $key => $val) {
             $count++;
         }

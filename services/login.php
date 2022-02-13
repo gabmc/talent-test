@@ -3,6 +3,8 @@
 include '../classes/User.php';
 include '../db/Db.php';
 
+session_start();
+
 if (isset($_POST['submit'])) {
     try {
         $errors = User::login($_POST['username'], $_POST['password']);
@@ -20,11 +22,16 @@ if (isset($_POST['submit'])) {
             exit;
         }
         else {
-            // set session with user?
-            // if
-            $user = jsonDb::select('users', ['username'=>$_POST['username'], 'password'=>$_POST['password']])[0];
-            header("Location: ../views/home.php");
-            exit;
+            $user = jsonDb::select('users', ['username'=>$_POST['username'], 'password'=>$_POST['password']]);
+            if (sizeof($user) > 0) {
+                $_SESSION['user'] = serialize($user[0]);
+                header("Location: ../views/home.php");
+                exit;
+            }
+            else {
+                header("Location: ../views/login.php?wrong=1");
+                exit;
+            }
         }
 
     } catch (Exception $e) {

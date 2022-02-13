@@ -22,6 +22,9 @@
 <?php endif; ?>
         <input type="hidden" name="submit">
         <input type="submit" value="Login">
+        <?php if (isset($_GET['wrong'])): ?>
+  <span class="error">Wrong username or password</span>
+<?php endif; ?>
         <p>Don't have an account? Sign up <a href="signUp.php">here</a></p>
     </form>
 </body>
